@@ -1,0 +1,346 @@
+\documentclass[20pt,margin=1in,innermargin=-4.5in,blockverticalspace=-0.25in]{tikzposter}
+\geometry{paperwidth=42in,paperheight=32.5in}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{mathrsfs}
+\usepackage{graphicx}
+\usepackage{adjustbox}
+\usepackage{enumitem}
+\usepackage[backend=bibtex,style=ieee]{biblatex}
+\usepackage{uwtheme}
+\usepackage{mathrsfs}
+\usepackage{braket}
+\usepackage{graphicx}
+\usepackage{thmbox}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage[all]{xy}
+\usetikzlibrary{patterns}
+\usepackage{mathtools}
+\DeclarePairedDelimiter\bra{\langle}{\rvert}
+\DeclarePairedDelimiter\ket{\lvert}{\rangle}
+\DeclarePairedDelimiterX\braket[2]{\langle}{\rangle}{#1 \delimsize\vert #2}
+\usepackage{bm}
+\definecolor{lightblue}{RGB}{251,209,44} % Defines the color used for content box headers
+\usepackage{wrapfig}
+\setlength\parindent{48pt}
+
+\usepackage{mwe}
+
+\bibliography{refs}
+\addbibresource{refs.bib}
+
+\tikzposterlatexaffectionproofoff
+\usetheme{UWTheme}
+\usecolorstyle{UWStyle}
+
+\usepackage[scaled]{helvet}
+\renewcommand\familydefault{\sfdefault} 
+\usepackage[T1]{fontenc}
+
+\title{Spectral theory on $\textit{L}^2$: kernel operators and Hamiltonian }
+\author{Arthur L. Limoge\textsuperscript}
+\institute{\textsuperscript \, Imperial College London}
+\titlegraphic{\includegraphics[width=0.06\textwidth]{logo.png}}
+
+\begin{document}
+\maketitle
+\centering
+
+\begin{columns}
+    \column{0.32}
+    \block{$\textit{L}^2\,$ as a Hilbert Space}{
+         
+        \hspace*{10mm} At the start of the 20th century, progress in analysis, especially spectral theory, 
+         
+         \begin{minipage}{0.75\linewidth}
+                  \vspace{-1.5em}
+         led to define Hilbert spaces, and hence generalize notions previously established by figures including Fourier or Parseval. In particular, operator theory developed a lot under the influence of mathematicians such as Frigyes Riesz, who defined $L^p$ spaces for the first time. 
+         
+         \smallskip
+         
+         Formally, for $p \in \mathbb{N}^{*},$ and $(X,\mathcal{F}, \mu)$ a measure space:
+         
+         \end{minipage}
+         \hfill
+         \begin{minipage}{0.2\linewidth}
+         \begin{tikzfigure}[Frigyes  Riesz]
+         \includegraphics[scale=0.5]{beaugosse.jpg}
+         \end{tikzfigure}
+         \end{minipage}
+       
+         
+         
+         \begin{align*}
+            L^p(X) := \{f : \displaystyle\int_X |f|^p \mathrm{d}\mu < +\infty \}
+        \end{align*}
+        
+        \medskip
+        
+        In the following, we will simply consider $X$ to be a subset of $\mathbb{R}$, $\mu$ to be the Lebesgue measure, and we will focus on the case $p = 2$.
+         
+        \medskip
+        
+        For $X \subseteq \mathbb{R}, L^2(X)$ is a Hilbert Space. Its inner product is indeed well-defined due to the linearity of integration $\left(\text{where }\braket{f|g}\footnote{1} = \displaystyle\int_X g(x)f(x)\mathrm{d}x\right)$; and the space has been proven to be complete by the Riesz-Fischer theorem [\cite{1}]. We will here zoom in on integral operators of the form:
+        
+        \begin{align*}
+         \, \mathcal{T}: \begin{array}{ccccc}  & \, & L^2(X) & \to & L^2(X) \\  & & f & \mapsto & \left(x\mapsto \displaystyle\int_X K(x,y)f(y) \mathrm{d}y\right) \\ \end{array} 
+        \end{align*}
+        
+        \normalsize{where $K : \mathbb{R}^2 \to \mathbb{R}$} is called the kernel of the transform.
+            \vspace{2em}
+    }
+    
+
+    \block{Study of the spectrum}{
+    
+
+    \large
+       \hspace*{10mm} The spectrum of an operator is a generalization [\cite{3}] of the set of eigenvalues to infinite dimension:
+        
+        \medskip
+        
+        For two vectors $\ket{\chi}, \ket{\varphi}$ in a Hilbert space $\mathcal{H}$, and $z \in \mathbb{K},$ consider the equation
+        
+        \begin{equation}
+            (zI - T)\ket{\chi} = \ket{\varphi}
+            \label{eq:1}
+        \end{equation}
+        
+        \medskip
+        
+        If the image of $(zI - T)$ ($I$ being the identity) is $\mathcal{H}$, then $z$ is said to be a \textbf{regular value} of $T$, and the resolvent $(zI - T)^{-1}$ is well-defined. The spectrum is then defined to be the set of non-regular values of $T$.  In our case, $\mathcal{H} = L^2(X)$, $X$ being a subset of $\mathbb{R}$.
+        
+        \medskip
+        
+        In some simple cases, this eigenvalue problem can be brought down to a linear algebra one. For example, with the operator satisfying $Tf(x) = \int K(x,y)f(y)\mathrm{d}y :$
+        
+        \medskip
+        
+        \begin{minipage}{0.8\linewidth}
+        \bigskip
+        \bigskip
+        
+        
+    \normalsize
+         \begin{wrapfigure}{r}{0.01\linewidth}
+\vspace{-2em} \resizebox{5.8cm}{1.3cm}{\xymatrix{
+    V \ar[r]^{T} \ar[d]_u  & V \ar[d]^u  \\
+    \mathbb{R}^n \ar[r]_A & \mathbb{R}^n \\
+  } }  
+\end{wrapfigure}
+Assume $K(x,y) = \displaystyle\sum\limits_{k=1}^{n} \varphi_k(x)\psi_k(y)$ is the kernel of an operator $T$, where $\{\varphi_k\}$ and $\{\psi_k\}$ are sets of functions, and the $\ket{\varphi_k}$ are linearly independent (call $V$ their span). Solving the eigenvalue problem is equivalent to diagonalizing the associated matrix in the side diagram; where $u$ denotes the  natural isomorphism $V \to \mathbb{R}^n$. We can check it by taking $\ket{f} \in V$, and then following the diagram to get $Au(\ket{f}) = u(T\ket{f})$.
+
+
+        
+        \end{minipage}
+        
+
+    }
+
+    \column{0.36}
+    \block{Norm of operators}{
+    
+   \hspace*{10mm} The norm of an operator $T$ is defined as $||T||_2 := \sup\limits_{f \ne 0} \dfrac{\braket{Tf|f}}{||f||^2}$. Its knowledge is quite useful because it provides an upper bound for the eigenvalues of the transform, [\cite{4}]. However, some do not have eigenvalues. For instance, consider the operator $\mathcal{K}$ with kernel $K : (x,y) \mapsto \dfrac{1}{x+y}$, on $L^2(\mathbb{R}_+)$.
+
+\bigskip
+
+It has no (non-zero) eigenvalues, but it still has a non-empty spectrum: the function defined by $x \mapsto x^{-1/2}$ does not belong to $L^2(\mathbb{R}_+)$, but one can note that:
+
+\medskip
+        
+        \begin{equation}
+       \displaystyle\int_{0}^{+\infty} \dfrac{1}{x+y}y^{-1/2} \mathrm{d}y = \pi x^{-1/2} \text{ (proved by setting } t=\frac{\sqrt{y}}{\sqrt{x}})
+       \end{equation}
+       
+       \vspace{1em}
+       
+       Therefore, the spectrum contains $\pi$, which we can prove is an upper bound for the norm. Indeed, take $\ket{f} \in L^2(\mathbb{R}_+)$ and consider:
+       
+
+       
+       \begin{align*}
+           \braket{Kf|f} & = \displaystyle\iint_{0}^{+\infty} \dfrac{f(y)f(x)}{x+y} \mathrm{d}y\,\mathrm{d}x =
+           \displaystyle\iint_{0}^{+\infty} \dfrac{f(xt)f(x)}{1 + t} \mathrm{d}t \mathrm{d}x \left(\text{set } y = tx) \\
+            & = \displaystyle\int_{0}^{+\infty} \dfrac{\braket{f(x)|f(xt)}}{1+t} \mathrm{d}t
+            \hspace{0.5em} \leq \displaystyle\int_{0}^{+\infty} \dfrac{1}{1+t}\times \dfrac{||f||}{\sqrt{t}}||f|| \,\mathrm{d}t \left(\text{\normalsize{Cauchy-Schwarz}}\right) \\
+            & =||f||^2 \displaystyle\int_{0}^{+\infty} \frac{t^{-1/2}}{1+t} \mathrm{d}t \hspace{1em} = \pi ||f||^2 \implies ||K||_2 \leq \pi. 
+       \end{align*}
+       
+       \hline
+       
+       \bigskip
+       
+       \large
+       
+       \hspace*{10mm}As-a-matter-of-fact, this norm \textbf{\underline{is}} $\pi$: note that though the function $x \mapsto x^{-1/2}$ is not in $L^2$;
+      
+      \vspace{-1.5em}
+       
+       \[
+\text{for $a > 1$, the function defined by  $f_a(x) =$}
+\left \{
+\begin{array}
+    \, x^{-1/2} \text{ if } 0 < x < a \\
+    0 \text{ else} 
+    \end{array}
+\right.
+\text{ \textbf{is}\footnote{2}. And by taking bigger values}
+\]
+
+\vspace{-1em}
+
+of $a$, we can expect $\dfrac{\braket{Kf_a|f_a}}{||f_a||^2}$ to get arbitrarily close to $\pi$:
+        
+  \begin{tikzfigure}[Plot of the curve $y = x^{-1/2}\times Kf_a(x)$. The yellow area represents $\braket{Kf_a|f_a}$.]
+\begin{tikzpicture}[loveofmylife.jpg, scale = 2.2]
+\begin{axis}[domain=0:100,
+    yticklabel style = {font=\scriptsize,xshift=0.5ex},
+    xticklabel style = {font=\scriptsize,xshift=0.5ex},
+    xscale=1,yscale=1,
+    xmin=0, xmax=100,
+    ymin=0, ymax= 0.1,
+    samples=501,
+    axis lines=center,
+    extra x ticks = {30},
+    extra x tick labels = {$a$}
+]
+\fill[pattern = vertical lines, lightblue] (0,0)-- (0, 100)-- plot[domain=0:30] (\x,{2*atan(5.477/sqrt(\x))*1/\x}) --(30,0) --cycle;
+    \draw[ultra thick, samples = 1000] plot[domain=0:100] (\x,{2*atan(5.477/sqrt(\x))*1/\x});
+    
+
+\end{axis}
+\end{tikzpicture}
+\end{tikzfigure}
+
+\vspace{1em}
+
+And it does! $\dfrac{\braket{Kf_a|f_a}}{||f_a||^2} = \dfrac{1}{\ln(a)}\displaystyle\int_{0}^{+\infty} \dfrac{2}{x}\arctan\left(\dfrac{\sqrt{a}}{\sqrt{x}}\right) \mathrm{d}x \geq \dfrac{1}{\ln(a)}\displaystyle\int_{a^{\varepsilon/\pi}}^{a} \dfrac{2}{x}\arctan\left(\dfrac{\sqrt{a}}{\sqrt{a^{\varepsilon/\pi}}}\right) \mathrm{d}x
+
+\medskip
+
+$\hspace{10em} = 2\dfrac{\ln(a^{1 - \varepsilon/\pi})}{\ln(a)}\arctan\left(\dfrac{\sqrt{a}}{\sqrt{a^{\varepsilon/\pi}}}\right) \longrightarrow \pi (1 - \dfrac{\varepsilon}{\pi}) = \pi - \varepsilon$, as $a \longrightarrow +\infty$
+
+\bigskip
+
+This holds for any fixed $\varepsilon \in (0, \pi)$, and \textit{a fortiori} for all $\varepsilon > 0$.
+\bigskip
+
+$\therefore \forall \varepsilon > 0\, \, \exists a > 1, \, \dfrac{\braket{Kf_a|f_a}}{||f_a||^2} \geq \pi - \varepsilon \implies \text{\boxed{\pi = \sup\limits_{f \ne 0} \dfrac{\braket{Kf|f}}{||f||^2} = ||K||_2}}$ \qed
+
+}
+
+    \column{0.32}
+    \block{Hamiltonian in Quantum Mechanics}{
+       \hspace*{10mm} The study of $L^2$ operators turns out to be important in quantum mechanics, as many problems consist in solving the eigenvalue equation of the Hamiltonian operator $\hat{H} := -\dfrac{\hbar}{2m}\nabla^2 + \hat{V}$ (where $\hbar = \frac{h}{2\pi}$ is the reduced Planck constant, and $\hat{V}$ is the potential operator)\footnote{3}.
+        
+        \bigskip
+        \bigskip
+
+
+    \begin{minipage}{0.62\linewidth}
+        For example, consider the one-dimensional \textit{infinite} potential well problem presented in $[\cite{2}]$. Assume a particle of mass $m$ is confined to an infinite tube of diameter $L$. By convention say the potential within is $0$. Let the potential outside be $+\infty$, so that the particle can never escape no matter its kinetic energy.
+    \end{minipage}    
+    \hfill
+                    \begin{minipage}{0.3\linewidth}
+                    \vspace{-1em}
+        \begin{tikzfigure}[1-D potential well]
+        \begin{tikzpicture}[scale = 3]
+        
+    \fill[lightblue, horizontal lines]
+        (0, 0) rectangle (0.5, 2)
+        (2, 0) rectangle (2.5, 2);
+
+    \vandbarrier{0.5}
+    \vandbarrier{2.5}
+    \vabove{1}
+    \vabove{2}
+    \node[anchor = north] at (0.5, 0)   {\scriptsize 0};
+    \node[anchor = north] at (2, 0)   {\scriptsize $L$};
+    \node[anchor = south] at (1.2, 0.8) {\small $V = 0$};
+    \node[anchor = north] at (0.25, 2.3) {\small $V=\infty$};
+    \node[anchor = north] at (2.2, 2.3) {\small $V=\infty$};
+
+    \draw[<->, ultra thick] (0, 0) to (2.5, 0);
+    \draw[->, ultra thick]  (0.5, 0) to (0.5, 2);
+    \draw[->, ultra thick]  (2, 0) to (2, 2);
+
+\end{tikzpicture}
+\end{tikzfigure}
+\end{minipage}
+
+
+\bigskip
+
+
+    \medskip
+    
+    Let $\ket{\psi}$ be the quantum state of the system, and $\psi$ its associated wave function, \textit{ie} it defines a probability amplitude. Hence, $\psi(x) = 0 \,\, \forall x \notin (0,L)$ (value at the barriers is enforced by the continuity of $\psi$). We can now solve:
+    
+    \bigskip
+    \bigskip
+
+    \begin{thmbox}[L]{Time-independent Schrödinger's equation}
+$\hat{H}\ket{\psi} = E\ket{\psi}$, with $E$ the energy of the system.
+\end{thmbox}
+
+in one-dimension. Since $\hat{V} = 0\,$  within the tube, we get: $-\dfrac{\hbar}{2m}\dfrac{\mathrm{d}^2\psi(x)}{\mathrm{d}x^2} = E\psi(x)$, 
+
+\smallskip
+
+which yields $\psi(x) = A\sin(kx)$ by using the boundary conditions above. And 
+
+\smallskip
+
+$\psi(L) = 0$ enforces that $k$ depends on $n \in \mathbb{N}$: $k_n = \pi n/L$.
+
+\bigskip
+
+\begin{minipage}{0.65\linewidth}
+
+Now, the particle has to be \textbf{somewhere} between $0$ and $L$, and since $\psi$ is a probability amplitude, this implies we need to normalize $\displaystyle\int_{0}^{L} \psi(x)^2 \mathrm{d}x$ for it to equal $1$. This condition enforces $A = \sqrt{2/L}$.
+
+\bigskip
+
+Now, the original ODE tells us that $k = \dfrac{\sqrt{2mE}}{\hbar}$
+
+$\implies E = \dfrac{\hbar^2k_n^2}{2m}$. Energy \textbf{is} quantified! 
+\end{minipage}
+\hfill
+\begin{minipage}{0.3\linewidth}
+\begin{tikzfigure}[Max Planck]
+\includegraphics[scale = 0.75]{grosbg.jpg}
+\end{tikzfigure}
+\end{minipage}
+
+\medskip
+
+
+
+    }
+
+    \block{Remarks}{
+        \vspace{-1em}
+    \begin{enumerate}
+    \normalsize 
+        \item To use the quantum mechanics notation, often used with infinite-dimensional Hilbert spaces, denote by $\ket{.}$ vectors, and by $\braket{.|.}$ the inner product on the space.
+        
+        \item This choice of function was inspired by that of the user robjohn in a post on the 14th of May 2013 on \textit{Math StackExchange} [\cite{5}]. I, however, tried to simplify the calculations as much as I could to make them easier, and aimed to add a geometrical meaning to that « trick ».
+        
+        \item Note that $\hat{H}$ is an example of unbounded operator (as it is frequent in quantum physics). One can indeed easily find a bounded function whose laplacian is unbounded.
+    \end{enumerate}
+    }
+    \nocite{*}
+    \block{References}{
+        \vspace{-1em}
+        
+
+        \begin{footnotesize}
+        \printbibliography[heading=none]
+        \end{footnotesize}
+    }
+\end{columns}
+\end{document}
